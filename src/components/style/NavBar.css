@@ -1,0 +1,129 @@
+/* Google Font Import */
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap');
+
+/* Basic Reset */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Roboto', sans-serif;
+}
+
+/* Color Palette */
+:root {
+    --soft-blue: #7BA7C2;
+    --soft-green: #8EB69B;
+    --soft-red: #D18B8B;
+    --soft-black: #383838;
+    --soft-white: #F5F5F5;
+}
+
+/* Styling the Navbar */
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: linear-gradient(to right, var(--soft-blue), var(--soft-green));
+    padding: 15px 20px;
+    position: fixed;
+    top: 0;
+    width: 100%;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    z-index: 1000;
+}
+
+.nav-link {
+    color: var(--soft-white);
+    text-decoration: none;
+    padding: 8px 12px;
+    font-size: 18px;
+    position: relative;
+    transition: color 0.3s, transform 0.3s;
+}
+
+.nav-link::after {
+    content: '';
+    position: absolute;
+    width: 0;
+    height: 2px;
+    background: var(--soft-red);
+    transition: width 0.3s;
+    bottom: -3px;
+    left: 0;
+}
+
+.nav-link:hover, .nav-link:focus {
+    color: var(--soft-red);
+    transform: translateY(-2px);
+}
+
+.nav-link:hover::after, .nav-link:focus::after {
+    width: 100%;
+}
+
+/* Styling the header */
+h1 {
+    color: var(--soft-white);
+    font-size: 28px;
+    font-weight: 500;
+}
+
+/* Dropdown Menu Styles */
+.dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+.dropbtn {
+    background-color: transparent;
+    color: var(--soft-white);
+    padding: 10px 15px;
+    font-size: 26px;
+    border: none;
+    cursor: pointer;
+    transition: color 0.3s;
+}
+
+.dropbtn:hover {
+    color: var(--soft-red);
+}
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    right: 0;
+    background-color: var(--soft-white);
+    min-width: 160px;
+    box-shadow: 0 8px 16px rgba(0,0,0,0.25);
+    z-index: 1;
+    border-radius: 4px;
+}
+
+.dropdown-content a {
+    color: var(--soft-black);
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+    transition: background-color 0.3s;
+}
+
+.dropdown-content a:hover {
+    background-color: var(--soft-blue);
+}
+
+.dropdown:hover .dropdown-content {
+    display: block;
+}
+
+/* Responsive Styles */
+@media screen and (max-width: 768px) {
+    .navbar {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .nav-link, .dropdown {
+        width: 100%;
+        text-align: left;
+    }
+}

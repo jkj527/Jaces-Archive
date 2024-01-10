@@ -1,0 +1,57 @@
+/* Player Management Component Styles */
+
+.player-management-container {
+    color: var(--soft-white);
+    padding: 20px;
+    margin-top: 80px; /* Adjust to ensure it's not hidden by the navbar */
+    font-family: 'Roboto', sans-serif;
+    background-color: var(--soft-black);
+    border-radius: 8px;
+    max-width: 600px;
+    margin: 80px auto; /* Centering the container */
+}
+
+.player-management-container h2 {
+    color: var(--soft-red);
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.form-section {
+    margin-bottom: 20px;
+    padding: 15px;
+    background-color: var(--soft-blue);
+    border-radius: 8px;
+}
+
+.form-label {
+    display: block;
+    margin-bottom: 10px;
+    font-size: 18px;
+    color: var(--soft-white);
+}
+
+.form-input {
+    width: 100%;
+    padding: 8px;
+    margin-bottom: 15px;
+    border-radius: 4px;
+    border: 1px solid var(--soft-green);
+    background-color: var(--soft-white);
+    color: var(--soft-black);
+}
+
+.form-button {
+    background-color: var(--soft-green);
+    color: var(--soft-white);
+    padding: 10px 15px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    width: 100%;
+    transition: background-color 0.3s;
+}
+
+.form-button:hover {
+    background-color: var(--soft-red);
+}
