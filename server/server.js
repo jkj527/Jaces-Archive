@@ -1,0 +1,45 @@
+const path = require('path');
+const express = require('express');
+const cors = require('cors');
+// const connectDB = require('./models/db'); // Path to your database connection file
+// const statisticModel = require('./models/statisticModel'); // This will be used in your routes/api file
+const apiRouter = require('./routes/api'); // Path to your API routes
+
+const app = express();
+const PORT = process.env.PORT || 3000;
+
+// Connect to MongoDB
+// connectDB();
+
+// Middleware
+app.use(cors());
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+
+// Serve static files from React app build directory
+app.use(express.static(path.join(__dirname, '..', 'build')));
+
+// Define route handlers
+app.use('/api', apiRouter);
+
+// Serve the React application
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname, '..', 'build', 'index.html'));
+});
+
+// Global error handler
+app.use((err, req, res, next) => {
+  const defaultErr = {
+    log: 'Express error handler caught unknown middleware error',
+    status: 500,
+    message: { err: 'An error occurred' },
+  };
+  const errorObj = Object.assign({}, defaultErr, err);
+  console.log(errorObj.log);
+  res.status(errorObj.status).json(errorObj.message);
+});
+
+// Start the server
+app.listen(PORT, () => {
+  console.log(`Server listening on port ${PORT}`);
+});

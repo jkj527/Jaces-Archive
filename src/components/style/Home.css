@@ -5,14 +5,14 @@
     padding: 20px;
     margin-top: 80px; /* Adjust based on the navbar height */
     font-family: 'Roboto', sans-serif;
-    background-color: var(--soft-black);
+    background-color: var(--soft-blue);
     border-radius: 8px;
     max-width: 800px;
     margin: 80px auto; /* Centering the container */
 }
 
 .home-container h2 {
-    color: var(--soft-red);
+    color: var(--soft-white);
     margin-bottom: 30px;
     text-align: center;
 }
@@ -74,4 +74,9 @@
 
 .submit-button:hover {
     background-color: var(--soft-red);
+}
+
+.home-container hr {
+    margin-top: 10px;
+    margin-bottom: 10px;
 }
