@@ -41,3 +41,7 @@
   .statistics-table tr:hover td {
     background-color: var(--soft-green);
   }
+
+  .totals-row {
+    font-weight: bold;
+  }

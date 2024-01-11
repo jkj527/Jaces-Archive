@@ -23,54 +23,71 @@ const Statistics = () => {
         // ... additional players
     ]);
 
-    useEffect(() => {
-        // Fetch the statistics data from your data source when the component mounts
-        // This will be replaced with actual fetch call
-    }, []);
+    // Function to calculate win percentage for an individual deck or a player's total
+    const calculateWinPercentage = (first, gamesPlayed) => {
+        return gamesPlayed > 0 ? ((first / gamesPlayed) * 100).toFixed(2) + '%' : "0%";
+    };
 
-    const calculateWinPercentage = (deck) => {
-        const totalGames = deck.gamesPlayed;
-        if (totalGames === 0) return "0%";
-        const totalWins = deck.first;
-        return ((totalWins / totalGames) * 100).toFixed(2) + '%';
+    // Function to calculate totals for an individual player
+    const calculatePlayerTotals = (decks) => {
+        return decks.reduce((totals, deck) => {
+            totals.gamesPlayed += deck.gamesPlayed;
+            totals.first += deck.first;
+            totals.second += deck.second;
+            totals.third += deck.third;
+            totals.fourth += deck.fourth;
+            return totals;
+        }, { gamesPlayed: 0, first: 0, second: 0, third: 0, fourth: 0 });
     };
 
     return (
         <div className='statistics-container'>
             <h2 className='statistics-heading'>Player Statistics</h2>
-            {statistics.map((player) => (
-                <div key={player.name}>
-                    <h3>{player.name}'s Decks</h3>
-                    <table className='statistics-table'>
-                        <thead>
-                            <tr>
-                                <th>Deck</th>
-                                <th>Active Deck?</th>
-                                <th>Total Games Played</th>
-                                <th>First Place</th>
-                                <th>Second Place</th>
-                                <th>Third Place</th>
-                                <th>Fourth Place</th>
-                                <th>Win Percentage</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {player.decks.map((deck) => (
-                                <tr key={deck.name}>
-                                    <td>{deck.name}</td>
-                                    <td>{deck.active ? 'Yes' : 'No'}</td>
-                                    <td>{deck.gamesPlayed}</td>
-                                    <td>{deck.first}</td>
-                                    <td>{deck.second}</td>
-                                    <td>{deck.third}</td>
-                                    <td>{deck.fourth}</td>
-                                    <td>{calculateWinPercentage(deck)}</td>
+            {statistics.map((player) => {
+                const playerTotals = calculatePlayerTotals(player.decks);
+                return (
+                    <div key={player.name}>
+                        <h3>{player.name}'s Decks</h3>
+                        <table className='statistics-table'>
+                            <thead>
+                                <tr>
+                                    <th>Deck</th>
+                                    <th>Active Deck?</th>
+                                    <th>Total Games Played</th>
+                                    <th>First Place</th>
+                                    <th>Second Place</th>
+                                    <th>Third Place</th>
+                                    <th>Fourth Place</th>
+                                    <th>Win Percentage</th>
                                 </tr>
-                            ))}
-                        </tbody>
-                    </table>
-                </div>
-            ))}
+                            </thead>
+                            <tbody>
+                                {player.decks.map((deck, index) => (
+                                    <tr key={index}>
+                                        <td>{deck.name}</td>
+                                        <td>{deck.active ? 'Yes' : 'No'}</td>
+                                        <td>{deck.gamesPlayed}</td>
+                                        <td>{deck.first}</td>
+                                        <td>{deck.second}</td>
+                                        <td>{deck.third}</td>
+                                        <td>{deck.fourth}</td>
+                                        <td>{calculateWinPercentage(deck.first, deck.gamesPlayed)}</td>
+                                    </tr>
+                                ))}
+                                <tr className="totals-row">
+                                    <td colSpan="2">Total</td>
+                                    <td>{playerTotals.gamesPlayed}</td>
+                                    <td>{playerTotals.first}</td>
+                                    <td>{playerTotals.second}</td>
+                                    <td>{playerTotals.third}</td>
+                                    <td>{playerTotals.fourth}</td>
+                                    <td>{calculateWinPercentage(playerTotals.first, playerTotals.gamesPlayed)}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                );
+            })}
         </div>
     );
 };

@@ -1,0 +1,120 @@
+/* src/style/Superlatives.css */
+
+.superlatives-container {
+    padding: 20px;
+    margin-top: 10px; /* Adjust based on navbar height */
+    background: var(--soft-white);
+    min-height: calc(100vh - 60px); /* Full height minus navbar */
+    color: var(--soft-black);
+}
+
+.superlatives-heading {
+    color: var(--soft-red);
+    margin-bottom: 20px;
+    text-align: center;
+    font-weight: 500;
+    font-size: 2rem;
+}
+
+.superlative-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: white;
+    margin-bottom: 1rem;
+    padding: 1rem;
+    border-radius: 10px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    border-left: 5px solid var(--soft-green); /* Highlight stripe */
+}
+
+.superlative-name {
+    margin-right: 1rem;
+    flex: 1; /* Allow the name to fill the space */
+    font-size: 1.2rem;
+}
+
+.superlative-controls {
+    display: flex;
+    align-items: center;
+}
+
+.superlative-controls button {
+    background-color: var(--soft-blue);
+    color: var(--soft-white);
+    border: none;
+    padding: 0.5rem 1rem;
+    margin: 0 0.5rem;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1rem;
+    transition: background-color 0.3s ease;
+}
+
+.superlative-controls button:hover {
+    background-color: var(--soft-green);
+}
+
+.superlative-count {
+    font-size: 1.2rem;
+    padding: 0.5rem 1rem;
+    border-radius: 5px;
+    border: 2px solid var(--soft-blue); /* Add a border to make the count stand out */
+    margin: 0 0.5rem;
+    min-width: 3rem;
+    text-align: center;
+    background-color: var(--soft-white);
+    transition: all 0.3s ease;
+}
+
+.superlative-count:hover {
+    background-color: var(--soft-green);
+    border-color: var(--soft-green);
+}
+
+/* Responsive styling */
+@media (max-width: 768px) {
+    .superlatives-container {
+        padding: 10px;
+    }
+    .superlative-name {
+        font-size: 1rem;
+    }
+    .superlative-controls button,
+    .superlative-count {
+        padding: 0.3rem 0.6rem;
+        font-size: 0.8rem;
+    }
+}
+
+/* Add to src/style/Superlatives.css */
+
+.superlative-form {
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.superlative-input {
+    padding: 10px;
+    margin-right: 10px;
+    font-size: 16px;
+    border-radius: 4px;
+    border: 1px solid var(--soft-grey);
+    width: 50%;
+}
+
+.add-superlative-button {
+    padding: 10px 20px;
+    font-size: 16px;
+    border-radius: 4px;
+    border: none;
+    cursor: pointer;
+    background-color: var(--soft-blue);
+    color: var(--soft-white);
+    transition: background-color 0.3s ease;
+}
+
+.add-superlative-button:hover {
+    background-color: var(--soft-green);
+}
+

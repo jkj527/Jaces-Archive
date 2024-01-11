@@ -6,10 +6,7 @@ import TextField from '@mui/material/TextField';
 import './style/Home.css';
 
 const Home = () => {
-    // Mock data for players
     const mockPlayers = ['Ben', 'Mason', 'Tim', 'Scott', 'Connor', 'David', 'Jake'];
-
-    // Mock data for decks (each player has an array of decks)
     const mockDecks = {
         'Ben': ['Ragavan', 'Lady Caleria'],
         'Mason': ['Breya', 'Shirei'],
@@ -39,87 +36,93 @@ const Home = () => {
     };
 
     const handleSubmitGame = () => {
-        // Logic to handle game submission
         console.log(`Game winner: ${winner}`);
         console.log(`Game setup:`, gameSetup);
-        // Reset game setup and winner after submission
         setGameSetup(Array(4).fill({ player: '', deck: '' }));
         setWinner('');
     };
 
-    // Filter selected players for the winner dropdown
     const selectedPlayersForGame = gameSetup.filter(setup => setup.player).map(setup => setup.player);
 
     return (
-        <div className='home-container'>  
-            <h2>Enter a New Game</h2>
+        <div className='home-container'>
+            <div className="title-container">
+                <h2>Enter a New Game</h2>
+            </div>
 
-            <LocalizationProvider dateAdapter={AdapterDayjs}>
-                <DatePicker
-                    label="Game Date"
-                    value={gameDate}
-                    onChange={(newValue) => setGameDate(newValue)}
-                    renderInput={(params) => <TextField {...params} />}
-                />
-            </LocalizationProvider>
+            <div className="date-picker-container">
+                <LocalizationProvider dateAdapter={AdapterDayjs}>
+                    <DatePicker
+                        label="Game Date"
+                        value={gameDate}
+                        onChange={(newValue) => setGameDate(newValue)}
+                        renderInput={(params) => <TextField {...params} />}
+                    />
+                </LocalizationProvider>
+            </div>
 
-            <hr />
+            <div className="player-selection-container">
+                {gameSetup.map((setup, index) => (
+                    <div className='select-row' key={index}>
+                        <div className='select-item'>
+                            <label className='select-label'>
+                                Player {index + 1}:
+                                <select
+                                    className='select-input'
+                                    value={setup.player}
+                                    onChange={(e) => handlePlayerChange(index, e.target.value)}
+                                >
+                                    <option value="">Select Player</option>
+                                    {players.map((player, idx) => (
+                                        <option key={idx} value={player}>{player}</option>
+                                    ))}
+                                </select>
+                            </label>
+                        </div>
+                        {setup.player && (
+                            <div className='select-item'>
+                                <label className='select-label'>
+                                    Deck:
+                                    <select
+                                        className='select-input'
+                                        value={setup.deck}
+                                        onChange={(e) => handleDeckChange(index, e.target.value)}
+                                    >
+                                        <option value="">Select Deck</option>
+                                        {decks[setup.player]?.map((deck, idx) => (
+                                            <option key={idx} value={deck}>{deck}</option>
+                                        ))}
+                                    </select>
+                                </label>
+                            </div>
+                        )}
+                    </div>
+                ))}
+            </div>
 
-            {gameSetup.map((setup, index) => (
-                <div className='select-row' key={index}>
+            <div className="winner-selection-container">
+                {selectedPlayersForGame.length > 0 && (
                     <div className='select-item'>
                         <label className='select-label'>
-                            Player {index + 1}:
+                            Winner:
                             <select
-                                className='select-input' 
-                                value={setup.player} 
-                                onChange={(e) => handlePlayerChange(index, e.target.value)}
+                                className='select-input'
+                                value={winner}
+                                onChange={(e) => setWinner(e.target.value)}
                             >
-                                <option value="">Select Player</option>
-                                {players.map((player, idx) => (
+                                <option value="">Select Winner</option>
+                                {selectedPlayersForGame.map((player, idx) => (
                                     <option key={idx} value={player}>{player}</option>
                                 ))}
                             </select>
                         </label>
                     </div>
-                    {setup.player && (
-                        <div className='select-item'>
-                            <label className='select-label'>
-                                Deck:
-                                <select
-                                    className='select-input' 
-                                    value={setup.deck}
-                                    onChange={(e) => handleDeckChange(index, e.target.value)}
-                                >
-                                    <option value="">Select Deck</option>
-                                    {decks[setup.player]?.map((deck, idx) => (
-                                        <option key={idx} value={deck}>{deck}</option>
-                                    ))}
-                                </select>
-                            </label>
-                        </div>
-                    )}
-                </div>
-            ))}
+                )}
+            </div>
 
-            {selectedPlayersForGame.length > 0 && (
-                <div>
-                    <label>
-                        Winner:
-                        <select 
-                            value={winner} 
-                            onChange={(e) => setWinner(e.target.value)}
-                        >
-                            <option value="">Select Winner</option>
-                            {selectedPlayersForGame.map((player, idx) => (
-                                <option key={idx} value={player}>{player}</option>
-                            ))}
-                        </select>
-                    </label>
-                </div>
-            )}
-            <hr />
-            <button className='submit-button' onClick={handleSubmitGame}>Submit Game</button>
+            <div className="submit-button-container">
+                <button className='submit-button' onClick={handleSubmitGame}>Submit Game</button>
+            </div>
         </div>
     );
 };
