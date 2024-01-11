@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { DatePicker } from '@mui/x-date-pickers';
-import TextField from '@mui/material/TextField';
+import { TextField } from '@mui/material';
 import './style/Home.css';
 
 const Home = () => {
@@ -21,7 +21,15 @@ const Home = () => {
     const [decks, setDecks] = useState(mockDecks);
     const [gameSetup, setGameSetup] = useState(Array(4).fill({ player: '', deck: '' }));
     const [winner, setWinner] = useState('');
+    const [secondPlace, setSecondPlace] = useState('');
+    const [thirdPlace, setThirdPlace] = useState('');
+    const [fourthPlace, setFourthPlace] = useState('');
     const [gameDate, setGameDate] = useState(null);
+    const [winningPlay, setWinningPlay] = useState('');
+    const [interestingPlays, setInterestingPlays] = useState('');
+    const [mvp, setMvp] = useState('');
+    const [otherNotes, setOtherNotes] = useState('');
+    const [roundsToWin, setRoundsToWin] = useState('');
 
     const handlePlayerChange = (index, selectedPlayer) => {
         const newGameSetup = [...gameSetup];
@@ -40,6 +48,9 @@ const Home = () => {
         console.log(`Game setup:`, gameSetup);
         setGameSetup(Array(4).fill({ player: '', deck: '' }));
         setWinner('');
+        setSecondPlace('');
+        setThirdPlace('');
+        setFourthPlace('');
     };
 
     const selectedPlayersForGame = gameSetup.filter(setup => setup.player).map(setup => setup.player);
@@ -100,23 +111,67 @@ const Home = () => {
                 ))}
             </div>
 
+            <div className="game-details-container">
+                <TextField
+                    label="Winning Play"
+                    value={winningPlay}
+                    onChange={(e) => setWinningPlay(e.target.value)}
+                    fullWidth
+                    margin="normal"
+                />
+                <TextField
+                    label="Interesting Plays"
+                    value={interestingPlays}
+                    onChange={(e) => setInterestingPlays(e.target.value)}
+                    fullWidth
+                    margin="normal"
+                />
+                <TextField
+                    label="MVP"
+                    value={mvp}
+                    onChange={(e) => setMvp(e.target.value)}
+                    fullWidth
+                    margin="normal"
+                />
+                <TextField
+                    label="Other Notes"
+                    value={otherNotes}
+                    onChange={(e) => setOtherNotes(e.target.value)}
+                    fullWidth
+                    margin="normal"
+                />
+                <TextField
+                    label="Rounds to Win"
+                    value={roundsToWin}
+                    onChange={(e) => setRoundsToWin(e.target.value)}
+                    fullWidth
+                    margin="normal"
+                    type="number"
+                />
+            </div>
+
             <div className="winner-selection-container">
                 {selectedPlayersForGame.length > 0 && (
-                    <div className='select-item'>
-                        <label className='select-label'>
-                            Winner:
-                            <select
-                                className='select-input'
-                                value={winner}
-                                onChange={(e) => setWinner(e.target.value)}
-                            >
-                                <option value="">Select Winner</option>
-                                {selectedPlayersForGame.map((player, idx) => (
-                                    <option key={idx} value={player}>{player}</option>
-                                ))}
-                            </select>
-                        </label>
-                    </div>
+                    <>
+                        <div className='select-item'>
+                            <label className='select-label'>Winner:</label>
+                            {renderPlayerSelect(winner, setWinner)}
+                        </div>
+                        <div className='placement-container'>
+                            <div className='select-item'>
+                                <label className='select-label'>2nd Place:</label>
+                                {renderPlayerSelect(secondPlace, setSecondPlace)}
+                            </div>
+                            <div className='select-item'>
+                                <label className='select-label'>3rd Place:</label>
+                                {renderPlayerSelect(thirdPlace, setThirdPlace)}
+                            </div>
+                            <div className='select-item'>
+                                <label className='select-label'>4th Place:</label>
+                                {renderPlayerSelect(fourthPlace, setFourthPlace)}
+                            </div>
+                        </div>
+                    </>
                 )}
             </div>
 
@@ -125,6 +180,21 @@ const Home = () => {
             </div>
         </div>
     );
+
+    function renderPlayerSelect(selectedValue, setValueFunc) {
+        return (
+            <select
+                className='select-input'
+                value={selectedValue}
+                onChange={(e) => setValueFunc(e.target.value)}
+            >
+                <option value="">Select Player</option>
+                {selectedPlayersForGame.map((player, idx) => (
+                    <option key={idx} value={player}>{player}</option>
+                ))}
+            </select>
+        );
+    }
 };
 
 export default Home;

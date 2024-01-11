@@ -2,12 +2,12 @@
 
 .home-container {
     padding: 40px;
-    margin-top: 80px; /* Adjust based on the navbar height */
+    /* margin-top: 10px; */
     font-family: 'Roboto', sans-serif;
     background: linear-gradient(135deg, var(--soft-blue) 30%, var(--soft-green) 70%);
     border-radius: 16px;
     max-width: 800px;
-    margin: 80px auto; /* Centering the container */
+    margin: 10px auto;
     box-shadow: 0px 10px 30px rgba(0, 0, 0, 0.2);
     overflow: hidden;
 }
@@ -37,7 +37,25 @@
     backdrop-filter: blur(8px);
     padding: 20px;
     border-radius: 8px;
+    margin-bottom: 10px;
+}
+
+.winner-selection-container {
+    background: rgba(0, 0, 0, 0.1);
+    backdrop-filter: blur(8px);
+    padding: 20px;
+    border-radius: 8px;
     margin-bottom: 20px;
+    margin-top: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch; /* To stretch the child elements to full width */
+}
+
+.placement-container {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 10px; /* Spacing between winner and other placements */
 }
 
 .select-row {
