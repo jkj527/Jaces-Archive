@@ -3,3 +3,11 @@
   padding-top: 100px; /* Adjust this value based on your navbar's actual height */
 }
 
+body {
+  background-image: url('jabg.png');
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center center;
+  /* background-attachment: fixed; */
+}
+
