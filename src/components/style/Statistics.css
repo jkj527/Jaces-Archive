@@ -35,7 +35,7 @@
   }
   
   .statistics-table tr:nth-child(even) td {
-    background-color: var(--soft-grey); /* You might want to add this to your color palette */
+    background-color: var(--soft-grey);
   }
   
   .statistics-table tr:hover td {

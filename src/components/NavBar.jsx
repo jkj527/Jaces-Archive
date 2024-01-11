@@ -12,7 +12,8 @@ const NavBar = () => {
                 <div className="dropdown-content">
                     <Link to="/account">Account</Link>
                     <Link to="/player-management">Manage Players</Link>
-                    <Link to="/statistics" className="nav-link">Statistics</Link>
+                    <Link to="/statistics">Statistics</Link>
+                    <Link to="/game-log">Game Log</Link>
                     {/* Add other links here if needed */}
                 </div>
             </div>

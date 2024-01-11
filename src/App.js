@@ -4,6 +4,7 @@ import NavBar from './components/NavBar';
 import Home from './components/Home';
 import PlayerManagement from './components/PlayerManagement';
 import Statistics from './components/Statistics';
+import GameLog from './components/GameLog';
 // import Account from './pages/Account';
 // Import other pages as needed
 import './App.css';
@@ -18,6 +19,7 @@ function App() {
           {/* <Route path="/account" element={<Account />} /> */}
           <Route path="/player-management" element={<PlayerManagement />} />
           <Route path="/statistics" element={<Statistics />} />
+          <Route path="/game-log" element={<GameLog />} />
           {/* Define other routes here */}
         </Routes>
       </div>
