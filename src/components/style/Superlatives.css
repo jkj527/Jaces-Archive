@@ -3,7 +3,7 @@
 .superlatives-container {
     padding: 20px;
     margin-top: 10px; /* Adjust based on navbar height */
-    background: var(--soft-white);
+    /* background: var(--soft-white); */
     min-height: calc(100vh - 60px); /* Full height minus navbar */
     color: var(--soft-black);
 }
