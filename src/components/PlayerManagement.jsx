@@ -3,6 +3,9 @@ import { TextField, MenuItem, Button } from '@mui/material';
 import './style/PlayerManagement.css';
 
 const PlayerManagement = () => {
+
+    const mockPlayers = ['Ben', 'Mason', 'Tim', 'Scott', 'Connor', 'David', 'Jake'];
+
     const [players, setPlayers] = useState([]);
     const [playerName, setPlayerName] = useState('');
     const [deckName, setDeckName] = useState('');
@@ -77,9 +80,9 @@ const PlayerManagement = () => {
                         fullWidth
                         margin="normal"
                     >
-                        {players.map((player) => (
-                            <MenuItem key={player.name} value={player.name}>
-                                {player.name}
+                        {mockPlayers.map((player) => (
+                            <MenuItem key={player} value={player}>
+                                {player}
                             </MenuItem>
                         ))}
                     </TextField>

@@ -1,15 +1,15 @@
 const path = require('path');
 const express = require('express');
 const cors = require('cors');
-// const connectDB = require('./models/db'); // Path to your database connection file
-// const statisticModel = require('./models/statisticModel'); // This will be used in your routes/api file
-const apiRouter = require('./routes/api'); // Path to your API routes
+const connectDB = require('./models/db');
+// const statisticModel = require('./models/statisticModel');
+const apiRouter = require('./routes/api');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
 
 // Connect to MongoDB
-// connectDB();
+connectDB();
 
 // Middleware
 app.use(cors());

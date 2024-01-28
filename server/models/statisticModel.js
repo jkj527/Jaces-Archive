@@ -1,12 +1,12 @@
 const mongoose = require('mongoose');
 
-const MONGO_URI =
-  'mongodb+srv://jkjohnson1996:<password>@cluster1.i5vk9vv.mongodb.net/?retryWrites=true&w=majority';
+// const MONGO_URI =
+//   'mongodb+srv://jkjohnson1996:<password>@cluster1.i5vk9vv.mongodb.net/?retryWrites=true&w=majority';
 
-mongoose
-  .connect(MONGO_URI)
-  .then(() => console.log('Connected to Mongo DB.'))
-  .catch((err) => console.log(err));
+// mongoose
+//   .connect(MONGO_URI)
+//   .then(() => console.log('Connected to Mongo DB.'))
+//   .catch((err) => console.log(err));
 
 const Schema = mongoose.Schema;
 
