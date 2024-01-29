@@ -14,6 +14,11 @@ Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
 The page will reload when you make changes.\
 You may also see any lint errors in the console.
 
+### `npm run dev`
+
+Added this script to package.json to concurrently run front-end and back-end.
+Should connect to server, database, and automatically open UI in browser.
+
 ### `npm test`
 
 Launches the test runner in the interactive watch mode.\
