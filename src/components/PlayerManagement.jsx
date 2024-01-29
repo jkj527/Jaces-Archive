@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-// import axios from 'axios';
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
 import { TextField, MenuItem, Button } from '@mui/material';
 import './style/PlayerManagement.css';
 
@@ -36,11 +36,6 @@ const PlayerManagement = () => {
         setDeckName('');
         setSelectedPlayer('');
     };
-
-    // const [players, setPlayers] = useState([]);
-    // const [playerName, setPlayerName] = useState('');
-    // const [deckName, setDeckName] = useState('');
-    // const [selectedPlayer, setSelectedPlayer] = useState('');
 
     // useEffect(() => {
     //     fetchPlayers();
