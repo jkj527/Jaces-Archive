@@ -1,9 +1,8 @@
-// src/components/GameLog.jsx
 import React, { useState } from 'react';
-import './style/GameLog.css'; // Make sure the path is correct
+import './style/GameLog.css';
 
 const GameLog = () => {
-    // Added more mock data for demonstration purposes
+    // mock data
     const [gameLogs, setGameLogs] = useState([
         {
             date: '2024-01-10',

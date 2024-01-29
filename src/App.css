@@ -1,6 +1,5 @@
 .App {
-  /* Add top padding or margin equal to the navbar's height */
-  padding-top: 100px; /* Adjust this value based on your navbar's actual height */
+  padding-top: 100px;
 }
 
 body {

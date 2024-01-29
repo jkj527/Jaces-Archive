@@ -1,10 +1,8 @@
-/* src/style/GameLog.css */
-
 .game-log-container {
     padding: 20px;
-    margin-top: 10px; /* Adjust based on navbar height */
+    margin-top: 10px;
     /* background: var(--soft-white); */
-    min-height: calc(100vh - 60px); /* Full height minus navbar */
+    min-height: calc(100vh - 60px);
     color: var(--soft-black);
 }
 
@@ -32,7 +30,7 @@
     padding: 10px;
     border-radius: 4px;
     margin-bottom: 10px;
-    border-left: 5px solid var(--soft-green); /* Highlight stripe */
+    border-left: 5px solid var(--soft-green);
 }
 
 .game-details p {

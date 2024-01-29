@@ -1,6 +1,5 @@
-// src/components/Superlatives.jsx
 import React, { useState } from "react";
-import "./style/Superlatives.css"; // You will create this CSS file for styling
+import "./style/Superlatives.css";
 
 const SuperlativeItem = ({ name, count, onIncrement, onDecrement }) => {
   return (

@@ -1,8 +1,8 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import './style/Statistics.css';
 
 const Statistics = () => {
-    // Initialize with mock data for demonstration
+    // mock data
     const [statistics, setStatistics] = useState([
         {
             name: 'Scott',

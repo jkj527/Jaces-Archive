@@ -8,13 +8,13 @@ const router = express.Router();
 // Route to get all statistics
 router.get('/statistics', statisticController.getAllStatistics);
 
-// Route to create a new statistic entry - DON'T NEED
+// Route to create a new statistic entry - DON'T NEED YET
 // router.post('/statistics', statisticController.createStatistic);
 
-// Route to update a statistic entry - DON'T NEED
+// Route to update a statistic entry - DON'T NEED YET
 // router.put('/statistics/:id', statisticController.updateStatistic);
 
-// Route to delete a statistic entry - DON'T NEED
+// Route to delete a statistic entry - DON'T NEED YET
 // router.delete('/statistics/:id', statisticController.deleteStatistic);
 
 // Route to get all game logs

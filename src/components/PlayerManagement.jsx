@@ -54,12 +54,8 @@ const PlayerManagement = () => {
                         sx={{
                             backgroundColor: 'var(--soft-red)',
                             color: 'var(--soft-white)',
-                            // Apply the CSS variables directly if they are defined globally
-                            // Otherwise, use the hex color codes or rgba values as shown below
-                            // backgroundColor: '#D18B8B', // Your soft red color value
-                            // color: '#FFFFFF', // Assuming soft white is white
                             '&:hover': {
-                                backgroundColor: 'var(--soft-red)', // Keep the same color on hover
+                                backgroundColor: 'var(--soft-red)',
                                 // transform: 'translateY(-3px)',
                                 boxShadow: '0px 8px 20px rgba(0, 0, 0, 0.25)',
                             }
@@ -100,7 +96,7 @@ const PlayerManagement = () => {
                             backgroundColor: 'var(--soft-red)',
                             color: 'var(--soft-white)',
                             '&:hover': {
-                                backgroundColor: 'var(--soft-red)', // Keep the same color on hover
+                                backgroundColor: 'var(--soft-red)',
                                 // transform: 'translateY(-3px)',
                                 boxShadow: '0px 8px 20px rgba(0, 0, 0, 0.25)',
                             }

@@ -1,10 +1,8 @@
-/* src/style/Superlatives.css */
-
 .superlatives-container {
     padding: 20px;
-    margin-top: 10px; /* Adjust based on navbar height */
+    margin-top: 10px;
     /* background: var(--soft-white); */
-    min-height: calc(100vh - 60px); /* Full height minus navbar */
+    min-height: calc(100vh - 60px);
     color: var(--soft-black);
 }
 
@@ -25,12 +23,12 @@
     padding: 1rem;
     border-radius: 10px;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-    border-left: 5px solid var(--soft-green); /* Highlight stripe */
+    border-left: 5px solid var(--soft-green);
 }
 
 .superlative-name {
     margin-right: 1rem;
-    flex: 1; /* Allow the name to fill the space */
+    flex: 1;
     font-size: 1.2rem;
 }
 
@@ -59,7 +57,7 @@
     font-size: 1.2rem;
     padding: 0.5rem 1rem;
     border-radius: 5px;
-    border: 2px solid var(--soft-blue); /* Add a border to make the count stand out */
+    border: 2px solid var(--soft-blue);
     margin: 0 0.5rem;
     min-width: 3rem;
     text-align: center;
@@ -86,8 +84,6 @@
         font-size: 0.8rem;
     }
 }
-
-/* Add to src/style/Superlatives.css */
 
 .superlative-form {
     margin-bottom: 20px;

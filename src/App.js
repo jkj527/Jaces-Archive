@@ -6,8 +6,6 @@ import PlayerManagement from './components/PlayerManagement';
 import Statistics from './components/Statistics';
 import GameLog from './components/GameLog';
 import Superlatives from './components/Superlatives';
-// import Account from './pages/Account';
-// Import other pages as needed
 import './App.css';
 
 function App() {
@@ -17,12 +15,10 @@ function App() {
         <NavBar />
         <Routes>
           <Route exact path="/" element={<Home />} />
-          {/* <Route path="/account" element={<Account />} /> */}
           <Route path="/player-management" element={<PlayerManagement />} />
           <Route path="/statistics" element={<Statistics />} />
           <Route path="/game-log" element={<GameLog />} />
           <Route path="/superlatives" element={<Superlatives />} />
-          {/* Define other routes here */}
         </Routes>
       </div>
     </Router>
