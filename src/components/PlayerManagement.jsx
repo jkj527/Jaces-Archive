@@ -5,76 +5,51 @@ import './style/PlayerManagement.css';
 
 const PlayerManagement = () => {
 
-    const mockPlayers = ['Ben', 'Mason', 'Tim', 'Scott', 'Connor', 'David', 'Jake'];
-
     const [players, setPlayers] = useState([]);
     const [playerName, setPlayerName] = useState('');
     const [deckName, setDeckName] = useState('');
     const [selectedPlayer, setSelectedPlayer] = useState('');
 
-    const handlePlayerSubmit = (e) => {
-        e.preventDefault();
-        const newPlayer = {
-            name: playerName,
-            decks: []
-        };
-        setPlayers([...players, newPlayer]);
-        setPlayerName('');
+    useEffect(() => {
+        fetchPlayers();
+    }, []);
+
+    const fetchPlayers = async () => {
+        try {
+            const response = await axios.get('/api/players');
+            setPlayers(response.data);
+        } catch (error) {
+            console.error('Error fetching players:', error);
+        }
     };
 
-    const handleDeckSubmit = (e) => {
+    const handlePlayerSubmit = async (e) => {
         e.preventDefault();
-        setPlayers(players.map(player => {
-            if (player.name === selectedPlayer) {
-                return {
-                    ...player,
-                    decks: [...player.decks, deckName]
-                };
+        if (playerName.trim()) {
+            try {
+                const response = await axios.post('/api/players', { name: playerName.trim() });
+                // Refresh the players list to get the most up-to-date information
+                fetchPlayers();
+                setPlayerName('');
+            } catch (error) {
+                console.error('Error adding player:', error);
             }
-            return player;
-        }));
-        setDeckName('');
-        setSelectedPlayer('');
+        }
     };
 
-    // useEffect(() => {
-    //     fetchPlayers();
-    // }, []);
-
-    // const fetchPlayers = async () => {
-    //     try {
-    //         const response = await axios.get('/api/players');
-    //         setPlayers(response.data);
-    //     } catch (error) {
-    //         console.error('Error fetching players:', error);
-    //     }
-    // };
-
-    // const handlePlayerSubmit = async (e) => {
-    //     e.preventDefault();
-    //     if (playerName.trim()) {
-    //         try {
-    //             const response = await axios.post('/api/players', { name: playerName.trim() });
-    //             // Refresh the players list to get the most up-to-date information
-    //             fetchPlayers();
-    //         } catch (error) {
-    //             console.error('Error adding player:', error);
-    //         }
-    //     }
-    // };
-
-    // const handleDeckSubmit = async (e) => {
-    //     e.preventDefault();
-    //     if (selectedPlayer && deckName.trim()) {
-    //         try {
-    //             await axios.post(`/api/players/${encodeURIComponent(selectedPlayer)}/decks`, { deck: deckName.trim() });
-    //             // Refresh the players list or the specific player's decks
-    //             fetchPlayers();
-    //         } catch (error) {
-    //             console.error('Error adding deck:', error);
-    //         }
-    //     }
-    // };
+    const handleDeckSubmit = async (e) => {
+        e.preventDefault();
+        if (selectedPlayer && deckName.trim()) {
+            try {
+                await axios.post(`/api/players/${encodeURIComponent(selectedPlayer)}/decks`, { deck: deckName.trim() });
+                // Refresh the players list or the specific player's decks
+                fetchPlayers();
+                setDeckName('');
+            } catch (error) {
+                console.error('Error adding deck:', error);
+            }
+        }
+    };
 
     return (
         <div className="player-management-container">
@@ -116,9 +91,9 @@ const PlayerManagement = () => {
                         fullWidth
                         margin="normal"
                     >
-                        {mockPlayers.map((player) => (
-                            <MenuItem key={player} value={player}>
-                                {player}
+                        {players.map((player) => (
+                            <MenuItem key={player.name} value={player.name}>
+                                {player.name}
                             </MenuItem>
                         ))}
                     </TextField>
