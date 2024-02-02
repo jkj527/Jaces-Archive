@@ -1,14 +1,15 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import { TextField, MenuItem, Button } from '@mui/material';
+import { TextField, MenuItem, Button, Snackbar } from '@mui/material';
 import './style/PlayerManagement.css';
 
 const PlayerManagement = () => {
-
     const [players, setPlayers] = useState([]);
     const [playerName, setPlayerName] = useState('');
     const [deckName, setDeckName] = useState('');
     const [selectedPlayer, setSelectedPlayer] = useState('');
+    const [snackbarOpen, setSnackbarOpen] = useState(false);
+    const [snackbarMessage, setSnackbarMessage] = useState('');
 
     useEffect(() => {
         fetchPlayers();
@@ -27,12 +28,15 @@ const PlayerManagement = () => {
         e.preventDefault();
         if (playerName.trim()) {
             try {
-                const response = await axios.post('/api/players', { name: playerName.trim() });
-                // Refresh the players list to get the most up-to-date information
+                await axios.post('/api/players', { name: playerName.trim() });
                 fetchPlayers();
                 setPlayerName('');
+                setSnackbarMessage('Player added successfully');
+                setSnackbarOpen(true);
             } catch (error) {
                 console.error('Error adding player:', error);
+                setSnackbarMessage('Error adding player');
+                setSnackbarOpen(true);
             }
         }
     };
@@ -41,14 +45,22 @@ const PlayerManagement = () => {
         e.preventDefault();
         if (selectedPlayer && deckName.trim()) {
             try {
-                await axios.post(`/api/players/${encodeURIComponent(selectedPlayer)}/decks`, { deck: deckName.trim() });
-                // Refresh the players list or the specific player's decks
+                await axios.post(`/api/players/${encodeURIComponent(selectedPlayer)}/decks`, { name: deckName.trim() });
                 fetchPlayers();
                 setDeckName('');
+                setSelectedPlayer('');
+                setSnackbarMessage('Deck added successfully');
+                setSnackbarOpen(true);
             } catch (error) {
                 console.error('Error adding deck:', error);
+                setSnackbarMessage('Error adding deck');
+                setSnackbarOpen(true);
             }
         }
+    };
+
+    const handleCloseSnackbar = () => {
+        setSnackbarOpen(false);
     };
 
     return (
@@ -122,6 +134,12 @@ const PlayerManagement = () => {
 
                 </form>
             </div>
+            <Snackbar
+                open={snackbarOpen}
+                autoHideDuration={6000}
+                onClose={handleCloseSnackbar}
+                message={snackbarMessage}
+            />
         </div>
     );
 };

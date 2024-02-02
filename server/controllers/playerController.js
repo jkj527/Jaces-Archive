@@ -40,7 +40,14 @@ const playerController = {
     addDeckToPlayer: async (req, res) => {
         try {
             const playerName = req.params.playerName;
-            const newDeck = req.body.deck;
+            const newDeck = {
+                name: req.body.name,
+                gamesPlayed: 0,
+                firstPlace: 0,
+                secondPlace: 0,
+                thirdPlace: 0,
+                fourthPlace: 0
+            };
             const player = await Player.findOneAndUpdate(
                 { name: playerName },
                 { $push: { decks: newDeck } },
@@ -54,7 +61,7 @@ const playerController = {
         } catch (error) {
             res.status(500).json({ message: error.message });
         }
-    }
+    }    
 }
 
 module.exports = playerController;
