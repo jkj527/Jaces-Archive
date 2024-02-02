@@ -7,6 +7,9 @@ const router = express.Router();
 // Route to get all game logs
 router.get('/game-log', gameLogController.getAllGameLogs);
 
+// Route for submitting a game and updating deck stats
+router.post('/game-log', gameLogController.submitGameAndUpdateStats);
+
 // Route to get all player names
 router.get('/players', playerController.getAllPlayerNames);
 

@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { DatePicker } from '@mui/x-date-pickers';
@@ -31,11 +32,31 @@ const Home = () => {
     const [otherNotes, setOtherNotes] = useState('');
     const [roundsToWin, setRoundsToWin] = useState('');
 
+    useEffect(() => {
+        axios.get('/api/players')
+            .then(response => {
+                const playerNames = response.data.map(player => player.name);
+                setPlayers(playerNames);
+            })
+            .catch(error => console.error("Failed to fetch players: ", error));
+    }, []);
+    
+
     const handlePlayerChange = (index, selectedPlayer) => {
-        const newGameSetup = [...gameSetup];
-        newGameSetup[index] = { ...newGameSetup[index], player: selectedPlayer, deck: '' };
-        setGameSetup(newGameSetup);
+        axios.get(`/api/players/${encodeURIComponent(selectedPlayer)}/decks`)
+            .then(response => {
+                // Assuming the backend sends an array of deck names
+                // Adjust if your API sends a different structure
+                const updatedDecks = { ...decks, [selectedPlayer]: response.data };
+                setDecks(updatedDecks);
+    
+                const newGameSetup = [...gameSetup];
+                newGameSetup[index] = { ...newGameSetup[index], player: selectedPlayer, deck: '' };
+                setGameSetup(newGameSetup);
+            })
+            .catch(error => console.error(`Failed to fetch decks for player ${selectedPlayer}: `, error));
     };
+    
 
     const handleDeckChange = (index, selectedDeck) => {
         const newGameSetup = [...gameSetup];
@@ -44,13 +65,43 @@ const Home = () => {
     };
 
     const handleSubmitGame = () => {
-        console.log(`Game winner: ${winner}`);
-        console.log(`Game setup:`, gameSetup);
+        const gameData = {
+            date: gameDate.format('YYYY-MM-DD'),
+            games: gameSetup.map(setup => ({
+                player: setup.player,
+                deck: setup.deck,
+            })),
+            winner: { player: winner, deck: gameSetup.find(setup => setup.player === winner)?.deck },
+            secondPlace: { player: secondPlace, deck: gameSetup.find(setup => setup.player === secondPlace)?.deck },
+            thirdPlace: { player: thirdPlace, deck: gameSetup.find(setup => setup.player === thirdPlace)?.deck },
+            fourthPlace: { player: fourthPlace, deck: gameSetup.find(setup => setup.player === fourthPlace)?.deck },
+            winningPlay,
+            interestingPlays,
+            mvp,
+            otherNotes,
+            roundsToWin,
+        };
+    
+        axios.post('/api/game-log', gameData)
+            .then(() => {
+                console.log("Game submitted successfully");
+                resetForm();
+            })
+            .catch(error => console.error("There was an error submitting the game: ", error));
+    };
+    
+    const resetForm = () => {
         setGameSetup(Array(4).fill({ player: '', deck: '' }));
         setWinner('');
         setSecondPlace('');
         setThirdPlace('');
         setFourthPlace('');
+        setGameDate(null);
+        setWinningPlay('');
+        setInterestingPlays('');
+        setMvp('');
+        setOtherNotes('');
+        setRoundsToWin('');
     };
 
     const selectedPlayersForGame = gameSetup.filter(setup => setup.player).map(setup => setup.player);
