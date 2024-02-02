@@ -17,6 +17,7 @@
     border-collapse: collapse;
     margin: 0 auto;
     background-color: var(--soft-black);
+    margin-bottom: 15px;
   }
   
   .statistics-table th,
