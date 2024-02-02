@@ -1,39 +1,66 @@
-import React, { useState } from 'react';
-import { TextField, MenuItem, Button } from '@mui/material';
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
+import { TextField, MenuItem, Button, Snackbar } from '@mui/material';
 import './style/PlayerManagement.css';
 
 const PlayerManagement = () => {
-
-    const mockPlayers = ['Ben', 'Mason', 'Tim', 'Scott', 'Connor', 'David', 'Jake'];
-
     const [players, setPlayers] = useState([]);
     const [playerName, setPlayerName] = useState('');
     const [deckName, setDeckName] = useState('');
     const [selectedPlayer, setSelectedPlayer] = useState('');
+    const [snackbarOpen, setSnackbarOpen] = useState(false);
+    const [snackbarMessage, setSnackbarMessage] = useState('');
 
-    const handlePlayerSubmit = (e) => {
-        e.preventDefault();
-        const newPlayer = {
-            name: playerName,
-            decks: []
-        };
-        setPlayers([...players, newPlayer]);
-        setPlayerName('');
+    useEffect(() => {
+        fetchPlayers();
+    }, []);
+
+    const fetchPlayers = async () => {
+        try {
+            const response = await axios.get('/api/players');
+            setPlayers(response.data);
+        } catch (error) {
+            console.error('Error fetching players:', error);
+        }
     };
 
-    const handleDeckSubmit = (e) => {
+    const handlePlayerSubmit = async (e) => {
         e.preventDefault();
-        setPlayers(players.map(player => {
-            if (player.name === selectedPlayer) {
-                return {
-                    ...player,
-                    decks: [...player.decks, deckName]
-                };
+        if (playerName.trim()) {
+            try {
+                await axios.post('/api/players', { name: playerName.trim() });
+                fetchPlayers();
+                setPlayerName('');
+                setSnackbarMessage('Player added successfully');
+                setSnackbarOpen(true);
+            } catch (error) {
+                console.error('Error adding player:', error);
+                setSnackbarMessage('Error adding player');
+                setSnackbarOpen(true);
             }
-            return player;
-        }));
-        setDeckName('');
-        setSelectedPlayer('');
+        }
+    };
+
+    const handleDeckSubmit = async (e) => {
+        e.preventDefault();
+        if (selectedPlayer && deckName.trim()) {
+            try {
+                await axios.post(`/api/players/${encodeURIComponent(selectedPlayer)}/decks`, { name: deckName.trim() });
+                fetchPlayers();
+                setDeckName('');
+                setSelectedPlayer('');
+                setSnackbarMessage('Deck added successfully');
+                setSnackbarOpen(true);
+            } catch (error) {
+                console.error('Error adding deck:', error);
+                setSnackbarMessage('Error adding deck');
+                setSnackbarOpen(true);
+            }
+        }
+    };
+
+    const handleCloseSnackbar = () => {
+        setSnackbarOpen(false);
     };
 
     return (
@@ -76,9 +103,9 @@ const PlayerManagement = () => {
                         fullWidth
                         margin="normal"
                     >
-                        {mockPlayers.map((player) => (
-                            <MenuItem key={player} value={player}>
-                                {player}
+                        {players.map((player) => (
+                            <MenuItem key={player.name} value={player.name}>
+                                {player.name}
                             </MenuItem>
                         ))}
                     </TextField>
@@ -107,6 +134,12 @@ const PlayerManagement = () => {
 
                 </form>
             </div>
+            <Snackbar
+                open={snackbarOpen}
+                autoHideDuration={6000}
+                onClose={handleCloseSnackbar}
+                message={snackbarMessage}
+            />
         </div>
     );
 };
