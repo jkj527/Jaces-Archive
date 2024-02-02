@@ -10,8 +10,8 @@
     color: var(--soft-red);
     margin-bottom: 20px;
     text-align: center;
-    font-weight: 500;
-    font-size: 2rem;
+    /* font-weight: 500;
+    font-size: 2rem; */
 }
 
 .superlative-item {

@@ -19,6 +19,9 @@ router.post('/players', playerController.addPlayer);
 // Route to add a deck to a specific player
 router.post('/players/:playerName/decks', playerController.addDeckToPlayer);
 
+// Route to get all player statistics
+router.get('/statistics', playerController.getPlayerStatistics);
+
 // Route to get all superlatives
 router.get('/superlatives', superlativesController.getAllSuperlatives);
 

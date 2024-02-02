@@ -61,7 +61,17 @@ const playerController = {
         } catch (error) {
             res.status(500).json({ message: error.message });
         }
-    }    
+    },
+
+    getPlayerStatistics: async (req, res) => {
+        try {
+            const players = await Player.find({}); // This fetches all data for players
+            res.status(200).json(players);
+        } catch (error) {
+            res.status(500).json({ message: error.message });
+        }
+    },
+    
 }
 
 module.exports = playerController;
