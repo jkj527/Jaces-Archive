@@ -112,7 +112,6 @@ const Home = () => {
         setMvp('');
         setOtherNotes('');
         setRoundsToWin('');
-        setSnackbarOpen(false);
     };
 
     const selectedPlayersForGame = gameSetup.filter(setup => setup.player).map(setup => setup.player);
@@ -240,7 +239,7 @@ const Home = () => {
             <div className="submit-button-container">
                 <button className='submit-button' onClick={handleSubmitGame}>Submit Game</button>
             </div>
-            <Snackbar open={true} autoHideDuration={6000} onClose={() => setSnackbarOpen(false)}>
+            <Snackbar open={snackbarOpen} autoHideDuration={6000} onClose={() => setSnackbarOpen(false)}>
                 <Alert onClose={() => setSnackbarOpen(false)} severity="success" sx={{ width: '100%', backgroundColor: 'var(--soft-grey)', color: 'var(--soft-white)' }}>
                     {snackbarMessage}
                 </Alert>
