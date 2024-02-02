@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import { TextField, MenuItem, Button, Snackbar } from '@mui/material';
+import { TextField, MenuItem, Button, Snackbar, Alert } from '@mui/material';
 import './style/PlayerManagement.css';
 
 const PlayerManagement = () => {
@@ -59,9 +59,9 @@ const PlayerManagement = () => {
         }
     };
 
-    const handleCloseSnackbar = () => {
-        setSnackbarOpen(false);
-    };
+    // const handleCloseSnackbar = () => {
+    //     setSnackbarOpen(false);
+    // };
 
     return (
         <div className="player-management-container">
@@ -134,12 +134,11 @@ const PlayerManagement = () => {
 
                 </form>
             </div>
-            <Snackbar
-                open={snackbarOpen}
-                autoHideDuration={6000}
-                onClose={handleCloseSnackbar}
-                message={snackbarMessage}
-            />
+            <Snackbar open={snackbarOpen} autoHideDuration={6000} onClose={() => setSnackbarOpen(false)}>
+                <Alert onClose={() => setSnackbarOpen(false)} severity="success" sx={{ width: '100%', backgroundColor: 'var(--soft-grey)', color: 'var(--soft-white)' }}>
+                    {snackbarMessage}
+                </Alert>
+            </Snackbar>
         </div>
     );
 };

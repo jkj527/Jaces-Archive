@@ -3,7 +3,7 @@ import axios from 'axios';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { DatePicker } from '@mui/x-date-pickers';
-import { TextField } from '@mui/material';
+import { TextField, Snackbar, Alert } from '@mui/material';
 import './style/Home.css';
 
 const Home = () => {
@@ -31,6 +31,9 @@ const Home = () => {
     const [mvp, setMvp] = useState('');
     const [otherNotes, setOtherNotes] = useState('');
     const [roundsToWin, setRoundsToWin] = useState('');
+    const [snackbarOpen, setSnackbarOpen] = useState(false);
+    const [snackbarMessage, setSnackbarMessage] = useState('');
+
 
     useEffect(() => {
         axios.get('/api/players')
@@ -45,9 +48,9 @@ const Home = () => {
     const handlePlayerChange = (index, selectedPlayer) => {
         axios.get(`/api/players/${encodeURIComponent(selectedPlayer)}/decks`)
             .then(response => {
-                // Assuming the backend sends an array of deck names
-                // Adjust if your API sends a different structure
-                const updatedDecks = { ...decks, [selectedPlayer]: response.data };
+                // Assuming the backend sends an array of deck objects
+                const playerDecks = response.data.map(deck => deck.name); // Extract deck names
+                const updatedDecks = { ...decks, [selectedPlayer]: playerDecks };
                 setDecks(updatedDecks);
     
                 const newGameSetup = [...gameSetup];
@@ -56,6 +59,7 @@ const Home = () => {
             })
             .catch(error => console.error(`Failed to fetch decks for player ${selectedPlayer}: `, error));
     };
+    
     
 
     const handleDeckChange = (index, selectedDeck) => {
@@ -85,9 +89,15 @@ const Home = () => {
         axios.post('/api/game-log', gameData)
             .then(() => {
                 console.log("Game submitted successfully");
+                setSnackbarMessage("Game submitted successfully!");
+                setSnackbarOpen(true);
                 resetForm();
             })
-            .catch(error => console.error("There was an error submitting the game: ", error));
+            .catch(error => {
+                console.error("There was an error submitting the game: ", error);
+                setSnackbarMessage("Failed to submit game. Please try again.");
+                setSnackbarOpen(true);
+            });
     };
     
     const resetForm = () => {
@@ -102,6 +112,7 @@ const Home = () => {
         setMvp('');
         setOtherNotes('');
         setRoundsToWin('');
+        setSnackbarOpen(false);
     };
 
     const selectedPlayersForGame = gameSetup.filter(setup => setup.player).map(setup => setup.player);
@@ -151,8 +162,8 @@ const Home = () => {
                                         onChange={(e) => handleDeckChange(index, e.target.value)}
                                     >
                                         <option value="">Select Deck</option>
-                                        {decks[setup.player]?.map((deck, idx) => (
-                                            <option key={idx} value={deck}>{deck}</option>
+                                        {decks[setup.player]?.map((deckName, idx) => (
+                                            <option key={idx} value={deckName}>{deckName}</option>
                                         ))}
                                     </select>
                                 </label>
@@ -229,6 +240,11 @@ const Home = () => {
             <div className="submit-button-container">
                 <button className='submit-button' onClick={handleSubmitGame}>Submit Game</button>
             </div>
+            <Snackbar open={true} autoHideDuration={6000} onClose={() => setSnackbarOpen(false)}>
+                <Alert onClose={() => setSnackbarOpen(false)} severity="success" sx={{ width: '100%', backgroundColor: 'var(--soft-grey)', color: 'var(--soft-white)' }}>
+                    {snackbarMessage}
+                </Alert>
+            </Snackbar>
         </div>
     );
 
