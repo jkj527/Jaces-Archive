@@ -1,8 +1,9 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { DatePicker } from '@mui/x-date-pickers';
-import { TextField } from '@mui/material';
+import { TextField, Snackbar, Alert } from '@mui/material';
 import './style/Home.css';
 
 const Home = () => {
@@ -30,12 +31,36 @@ const Home = () => {
     const [mvp, setMvp] = useState('');
     const [otherNotes, setOtherNotes] = useState('');
     const [roundsToWin, setRoundsToWin] = useState('');
+    const [snackbarOpen, setSnackbarOpen] = useState(false);
+    const [snackbarMessage, setSnackbarMessage] = useState('');
+
+
+    useEffect(() => {
+        axios.get('/api/players')
+            .then(response => {
+                const playerNames = response.data.map(player => player.name);
+                setPlayers(playerNames);
+            })
+            .catch(error => console.error("Failed to fetch players: ", error));
+    }, []);
+    
 
     const handlePlayerChange = (index, selectedPlayer) => {
-        const newGameSetup = [...gameSetup];
-        newGameSetup[index] = { ...newGameSetup[index], player: selectedPlayer, deck: '' };
-        setGameSetup(newGameSetup);
+        axios.get(`/api/players/${encodeURIComponent(selectedPlayer)}/decks`)
+            .then(response => {
+                // Assuming the backend sends an array of deck objects
+                const playerDecks = response.data.map(deck => deck.name); // Extract deck names
+                const updatedDecks = { ...decks, [selectedPlayer]: playerDecks };
+                setDecks(updatedDecks);
+    
+                const newGameSetup = [...gameSetup];
+                newGameSetup[index] = { ...newGameSetup[index], player: selectedPlayer, deck: '' };
+                setGameSetup(newGameSetup);
+            })
+            .catch(error => console.error(`Failed to fetch decks for player ${selectedPlayer}: `, error));
     };
+    
+    
 
     const handleDeckChange = (index, selectedDeck) => {
         const newGameSetup = [...gameSetup];
@@ -44,13 +69,49 @@ const Home = () => {
     };
 
     const handleSubmitGame = () => {
-        console.log(`Game winner: ${winner}`);
-        console.log(`Game setup:`, gameSetup);
+        const gameData = {
+            date: gameDate.format('YYYY-MM-DD'),
+            games: gameSetup.map(setup => ({
+                player: setup.player,
+                deck: setup.deck,
+            })),
+            winner: { player: winner, deck: gameSetup.find(setup => setup.player === winner)?.deck },
+            secondPlace: { player: secondPlace, deck: gameSetup.find(setup => setup.player === secondPlace)?.deck },
+            thirdPlace: { player: thirdPlace, deck: gameSetup.find(setup => setup.player === thirdPlace)?.deck },
+            fourthPlace: { player: fourthPlace, deck: gameSetup.find(setup => setup.player === fourthPlace)?.deck },
+            winningPlay,
+            interestingPlays,
+            mvp,
+            otherNotes,
+            roundsToWin,
+        };
+    
+        axios.post('/api/game-log', gameData)
+            .then(() => {
+                console.log("Game submitted successfully");
+                setSnackbarMessage("Game submitted successfully!");
+                setSnackbarOpen(true);
+                resetForm();
+            })
+            .catch(error => {
+                console.error("There was an error submitting the game: ", error);
+                setSnackbarMessage("Failed to submit game. Please try again.");
+                setSnackbarOpen(true);
+            });
+    };
+    
+    const resetForm = () => {
         setGameSetup(Array(4).fill({ player: '', deck: '' }));
         setWinner('');
         setSecondPlace('');
         setThirdPlace('');
         setFourthPlace('');
+        setGameDate(null);
+        setWinningPlay('');
+        setInterestingPlays('');
+        setMvp('');
+        setOtherNotes('');
+        setRoundsToWin('');
     };
 
     const selectedPlayersForGame = gameSetup.filter(setup => setup.player).map(setup => setup.player);
@@ -100,8 +161,8 @@ const Home = () => {
                                         onChange={(e) => handleDeckChange(index, e.target.value)}
                                     >
                                         <option value="">Select Deck</option>
-                                        {decks[setup.player]?.map((deck, idx) => (
-                                            <option key={idx} value={deck}>{deck}</option>
+                                        {decks[setup.player]?.map((deckName, idx) => (
+                                            <option key={idx} value={deckName}>{deckName}</option>
                                         ))}
                                     </select>
                                 </label>
@@ -178,6 +239,11 @@ const Home = () => {
             <div className="submit-button-container">
                 <button className='submit-button' onClick={handleSubmitGame}>Submit Game</button>
             </div>
+            <Snackbar open={snackbarOpen} autoHideDuration={6000} onClose={() => setSnackbarOpen(false)}>
+                <Alert onClose={() => setSnackbarOpen(false)} severity="success" sx={{ width: '100%', backgroundColor: 'var(--soft-grey)', color: 'var(--soft-white)' }}>
+                    {snackbarMessage}
+                </Alert>
+            </Snackbar>
         </div>
     );
 
