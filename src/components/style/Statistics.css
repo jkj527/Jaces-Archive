@@ -8,6 +8,8 @@
     text-align: center;
     color: var(--soft-red);
     margin-bottom: 20px;
+    /* font-weight: 500;
+    font-size: 2rem; */
   }
   
   .statistics-table {

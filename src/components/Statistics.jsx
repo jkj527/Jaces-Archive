@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
 import './style/Statistics.css';
 
 const Statistics = () => {
@@ -22,6 +23,22 @@ const Statistics = () => {
         },
         // ... additional players
     ]);
+
+    useEffect(() => {
+        const fetchStatistics = async () => {
+            try {
+                const response = await axios.get('/api/statistics');
+                console.log(response.data);
+                setStatistics(response.data);
+                console.log(statistics);
+            } catch (error) {
+                console.error('Failed to fetch statistics:', error);
+            }
+        };
+    
+        fetchStatistics();
+    }, []);
+    
 
     // Function to calculate win percentage for an individual deck or a player's total
     const calculateWinPercentage = (first, gamesPlayed) => {
@@ -65,13 +82,13 @@ const Statistics = () => {
                                 {player.decks.map((deck, index) => (
                                     <tr key={index}>
                                         <td>{deck.name}</td>
-                                        <td>{deck.active ? 'Yes' : 'No'}</td>
+                                        <td>{deck.activeDeck ? 'Yes' : 'No'}</td>
                                         <td>{deck.gamesPlayed}</td>
-                                        <td>{deck.first}</td>
-                                        <td>{deck.second}</td>
-                                        <td>{deck.third}</td>
-                                        <td>{deck.fourth}</td>
-                                        <td>{calculateWinPercentage(deck.first, deck.gamesPlayed)}</td>
+                                        <td>{deck.firstPlace}</td>
+                                        <td>{deck.secondPlace}</td>
+                                        <td>{deck.thirdPlace}</td>
+                                        <td>{deck.fourthPlace}</td>
+                                        <td>{calculateWinPercentage(deck.firstPlace, deck.gamesPlayed)}</td>
                                     </tr>
                                 ))}
                                 <tr className="totals-row">
