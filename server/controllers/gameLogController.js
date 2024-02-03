@@ -4,12 +4,22 @@ const Player = require('../models/playerModel');
 const gameLogController = {
     getAllGameLogs: async (req, res) => {
         try {
-            const gameLogs = await GameLog.find({});
+            // Fetch all game logs and then group by date
+            const gameLogs = await GameLog.aggregate([
+                { $sort: { date: -1 } },
+                {
+                    $group: {
+                        _id: { $dateToString: { format: "%Y-%m-%d", date: "$date" } },
+                        games: { $push: "$$ROOT" }
+                    }
+                },
+                { $sort: { "_id": -1 } }
+            ]);
             res.status(200).json(gameLogs);
         } catch (error) {
             res.status(500).json({ message: error.message });
         }
-    },
+    },    
 
     // addGameLog: async (req, res) => {
     //     try {

@@ -20,27 +20,28 @@ const GameLog = () => {
         <div className='game-log-container'>
             <h2 className='game-log-heading'>Game Log</h2>
             {gameLogs.map((log, logIndex) => (
-                <div key={logIndex} className='game-log-entry'>
-                    <h3>{new Date(log.date).toLocaleDateString()}</h3>
-                    {log.games.map((game, gameIndex) => (
-                        <div key={gameIndex} className='game-details'>
-                            <p>Players: {game.players.join(', ')}</p>
-                            <p>Winner: {game.winner} (Deck used: {game.deckUsed})</p>
+                <div key={logIndex} className='game-log-date-group'>
+                    <h3>{log.date}</h3>
+                    <div className='game-details-container'>
+                        <div className='game-details'>
+                            <p>Players: {log.players?.join(', ')}</p>
+                            <p>Winner: {log.winner} (Deck used: {log.deckUsed})</p>
                             {/* Display new fields if they are present */}
-                            {game.secondPlace && <p>2nd Place: {game.secondPlace}</p>}
-                            {game.thirdPlace && <p>3rd Place: {game.thirdPlace}</p>}
-                            {game.fourthPlace && <p>4th Place: {game.fourthPlace}</p>}
-                            {game.winningPlay && <p>Winning Play: {game.winningPlay}</p>}
-                            {game.interestingPlays && <p>Interesting Plays: {game.interestingPlays}</p>}
-                            {game.mvp && <p>MVP: {game.mvp}</p>}
-                            {game.otherNotes && <p>Other Notes: {game.otherNotes}</p>}
-                            {game.roundsToWin && <p>Rounds to Win: {game.roundsToWin}</p>}
+                            {log.secondPlace && <p>2nd Place: {log.secondPlace}</p>}
+                            {log.thirdPlace && <p>3rd Place: {log.thirdPlace}</p>}
+                            {log.fourthPlace && <p>4th Place: {log.fourthPlace}</p>}
+                            {log.winningPlay && <p>Winning Play: {log.winningPlay}</p>}
+                            {log.interestingPlays && <p>Interesting Plays: {log.interestingPlays}</p>}
+                            {log.mvp && <p>MVP: {log.mvp}</p>}
+                            {log.otherNotes && <p>Other Notes: {log.otherNotes}</p>}
+                            {log.roundsToWin && <p>Rounds to Win: {log.roundsToWin}</p>}
                         </div>
-                    ))}
+                    </div>
                 </div>
             ))}
         </div>
     );
+     
 };
 
 export default GameLog;

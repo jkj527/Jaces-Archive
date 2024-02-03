@@ -71,19 +71,19 @@ const Home = () => {
     const handleSubmitGame = () => {
         const gameData = {
             date: gameDate.format('YYYY-MM-DD'),
-            games: gameSetup.map(setup => ({
-                player: setup.player,
-                deck: setup.deck,
-            })),
-            winner: { player: winner, deck: gameSetup.find(setup => setup.player === winner)?.deck },
-            secondPlace: { player: secondPlace, deck: gameSetup.find(setup => setup.player === secondPlace)?.deck },
-            thirdPlace: { player: thirdPlace, deck: gameSetup.find(setup => setup.player === thirdPlace)?.deck },
-            fourthPlace: { player: fourthPlace, deck: gameSetup.find(setup => setup.player === fourthPlace)?.deck },
-            winningPlay,
-            interestingPlays,
-            mvp,
-            otherNotes,
-            roundsToWin,
+            game: {
+                players: gameSetup.filter(setup => setup.player).map(setup => setup.player),
+                decks: gameSetup.filter(setup => setup.deck).map(setup => setup.deck),
+                winner: winner,
+                secondPlace: secondPlace,
+                thirdPlace: thirdPlace,
+                fourthPlace: fourthPlace,
+                winningPlay: winningPlay,
+                interestingPlays: interestingPlays,
+                mvp: mvp,
+                otherNotes: otherNotes,
+                roundsToWin: roundsToWin,
+            }
         };
     
         axios.post('/api/game-log', gameData)
@@ -99,6 +99,7 @@ const Home = () => {
                 setSnackbarOpen(true);
             });
     };
+    
     
     const resetForm = () => {
         setGameSetup(Array(4).fill({ player: '', deck: '' }));
