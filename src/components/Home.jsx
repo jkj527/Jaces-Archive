@@ -71,7 +71,7 @@ const Home = () => {
     const handleSubmitGame = () => {
         const gameData = {
             date: gameDate.format('YYYY-MM-DD'),
-            games: gameSetup.map(setup => ({
+            playersAndDecks: gameSetup.map(setup => ({
                 player: setup.player,
                 deck: setup.deck,
             })),
@@ -86,6 +86,12 @@ const Home = () => {
             roundsToWin,
         };
     
+        // console.log('playersAndDecks: ', gameData.playersAndDecks);
+        // console.log('1st: ', gameData.winner);
+        // console.log('2nd: ', gameData.secondPlace);
+        // console.log('3rd: ', gameData.thirdPlace);
+        // console.log('4th: ', gameData.fourthPlace);
+
         axios.post('/api/game-log', gameData)
             .then(() => {
                 console.log("Game submitted successfully");

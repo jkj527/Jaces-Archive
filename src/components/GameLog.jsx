@@ -8,7 +8,7 @@ const GameLog = () => {
     useEffect(() => {
         axios.get('/api/game-log')
             .then(response => {
-                console.log('Game Log Data: ', response.data);
+                // console.log('Game Log Data: ', response.data);
                 setGameLogs(response.data);
             })
             .catch(error => {
@@ -19,26 +19,23 @@ const GameLog = () => {
     return (
         <div className='game-log-container'>
             <h2 className='game-log-heading'>Game Log</h2>
-            {gameLogs.map((logGroup, logGroupIndex) => (
-                <div key={logGroupIndex} className='game-log-date-group'>
-                    <h3>{logGroup._id /* This should be the date string */}</h3>
-                    {logGroup.games.map((game, gameIndex) => (
-                        <div key={gameIndex} className='game-details-container'>
+            {gameLogs.map((log, logIndex) => (
+                <div key={logIndex} className='game-log-date-group'>
+                    <h3>{log.date.slice(0, 10)}</h3>
+                        <div className='game-details-container'>
                             <div className='game-details'>
-                                <p>Date: {new Date(game.date).toLocaleDateString()}</p>
-                                <p>Players: {game.players?.join(', ')}</p>
-                                <p>Winner: {game.winner?.player || 'N/A'} with deck {game.winner?.deck || 'N/A'}</p>
-                                {game.secondPlace?.player && <p>2nd Place: {game.secondPlace.player} with deck {game.secondPlace.deck}</p>}
-                                {game.thirdPlace?.player && <p>3rd Place: {game.thirdPlace.player} with deck {game.thirdPlace.deck}</p>}
-                                {game.fourthPlace?.player && <p>4th Place: {game.fourthPlace.player} with deck {game.fourthPlace.deck}</p>}
-                                {game.winningPlay && <p>Winning Play: {game.winningPlay}</p>}
-                                {game.interestingPlays && <p>Interesting Plays: {game.interestingPlays}</p>}
-                                {game.mvp && <p>MVP: {game.mvp}</p>}
-                                {game.otherNotes && <p>Other Notes: {game.otherNotes}</p>}
-                                {game.roundsToWin && <p>Rounds to Win: {game.roundsToWin}</p>}
+                                {/* <p>Players: {log.players?.join(', ')}</p> */}
+                                <p><b>Winner:</b> {log.winner?.player} with {log.winner?.deck}</p>
+                                {log.secondPlace?.player && <p><b>2nd Place:</b> {log.secondPlace.player} with {log.secondPlace.deck}</p>}
+                                {log.thirdPlace?.player && <p><b>3rd Place:</b> {log.thirdPlace.player} with {log.thirdPlace.deck}</p>}
+                                {log.fourthPlace?.player && <p><b>4th Place:</b> {log.fourthPlace.player} with {log.fourthPlace.deck}</p>}
+                                {log.winningPlay && <p><b>Winning Play:</b> {log.winningPlay}</p>}
+                                {log.interestingPlays && <p><b>Interesting Plays:</b> {log.interestingPlays}</p>}
+                                {log.mvp && <p><b>MVP:</b> {log.mvp}</p>}
+                                {log.otherNotes && <p><b>Other Notes:</b> {log.otherNotes}</p>}
+                                {log.roundsToWin && <p><b>Rounds to Win:</b> {log.roundsToWin}</p>}
                             </div>
                         </div>
-                    ))}
                 </div>
             ))}
         </div>
@@ -47,4 +44,3 @@ const GameLog = () => {
 };
 
 export default GameLog;
-
