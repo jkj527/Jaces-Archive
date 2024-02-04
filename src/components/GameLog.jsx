@@ -8,7 +8,7 @@ const GameLog = () => {
     useEffect(() => {
         axios.get('/api/game-log')
             .then(response => {
-                console.log(response.data);
+                console.log('Game Log Data: ', response.data);
                 setGameLogs(response.data);
             })
             .catch(error => {
