@@ -4,12 +4,13 @@ const Player = require('../models/playerModel');
 const gameLogController = {
     getAllGameLogs: async (req, res) => {
         try {
+            // Fetch all game logs and then group by date
             const gameLogs = await GameLog.find({});
             res.status(200).json(gameLogs);
         } catch (error) {
             res.status(500).json({ message: error.message });
         }
-    },
+    },    
 
     // addGameLog: async (req, res) => {
     //     try {
@@ -31,13 +32,13 @@ const gameLogController = {
     // },
 
     submitGameAndUpdateStats: async (req, res) => {
-        const { date, games, winner, secondPlace, thirdPlace, fourthPlace, winningPlay, interestingPlays, mvp, otherNotes, roundsToWin } = req.body;
+        const { date, playersAndDecks, winner, secondPlace, thirdPlace, fourthPlace, winningPlay, interestingPlays, mvp, otherNotes, roundsToWin } = req.body;
 
         // Prepare the game log entry
         const newGameLogEntry = new GameLog({
             date,
-            games, // Assuming 'games' is structured correctly for your schema
-            winner, // This might need adjustment depending on your data structure
+            playersAndDecks,
+            winner,
             secondPlace,
             thirdPlace,
             fourthPlace,
@@ -47,6 +48,7 @@ const gameLogController = {
             otherNotes,
             roundsToWin,
         });
+        console.log('newGameLogEntry: ', newGameLogEntry);
     
         try {
             await newGameLogEntry.save(); // Save the new game log entry

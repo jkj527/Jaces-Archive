@@ -28,16 +28,55 @@
 }
 
 .game-details {
-    background: var(--soft-white);
-    padding: 10px;
-    border-radius: 4px;
-    margin-bottom: 10px;
+    background-color: var(--soft-white);
+    margin: 10px 0;
+    padding: 15px;
     border-left: 5px solid var(--soft-green);
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
 }
 
 .game-details p {
     margin: 5px 0;
-    font-size: 16px;
+    line-height: 1.5;
+}
+
+.game-log-date-group {
+    margin-bottom: 15px;
+    /* border-bottom: 2px solid var(--soft-white); */
+    padding-bottom: 7.5px;
+}
+
+.game-log-date-group h3 {
+    background-color: var(--soft-blue);
+    color: var(--soft-white);
+    padding: 10px;
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    width: 25%;
+}
+
+.game-log-date-group h3:hover {
+    background-color: var(--soft-red);
+}
+
+.toggle-indicator {
+    display: inline-block;
+    transition: transform 0.3s ease;
+}
+
+.open .toggle-indicator {
+    transform: rotate(360deg);
+}
+
+.game-details-container {
+    margin-top: 10px;
+    padding-left: 10px;
 }
 
 /* Responsive styling */
