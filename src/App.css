@@ -6,6 +6,11 @@
   margin-top: 100px;
 }
 
+body, html {
+  max-height: 100vh;
+  /* overflow: hidden; */
+}
+
 body {
   background-image: url('jabg2.png');
   background-size: cover;
