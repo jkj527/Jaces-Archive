@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faTrashAlt } from '@fortawesome/free-solid-svg-icons';
+// import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+// import { faTrashAlt } from '@fortawesome/free-solid-svg-icons';
 import axios from 'axios';
 import './style/Statistics.css';
 
@@ -37,15 +37,17 @@ const Statistics = () => {
         }, { gamesPlayed: 0, first: 0, second: 0, third: 0, fourth: 0 });
     };
 
-    const handleDeleteDeck = async (playerName, deckName) => {
-        try {
-            await axios.delete(`/api/players/${playerName}/decks/${deckName}`);
-            const response = await axios.get('/api/statistics');
-            setStatistics(response.data);
-        } catch (error) {
-            console.error('Failed to delete deck:', error);
-        }
-    };
+    // const handleDeleteDeck = async (playerName, deckName) => {
+    //     try {
+    //         await axios.delete(`/api/players/${playerName}/decks/${deckName}`);
+    //         // Refresh the statistics to reflect the deletion
+    //         // This could be optimized but for simplicity, we're refetching all data
+    //         const response = await axios.get('/api/statistics');
+    //         setStatistics(response.data);
+    //     } catch (error) {
+    //         console.error('Failed to delete deck:', error);
+    //     }
+    // };
 
     return (
         <div className='statistics-container'>
@@ -73,7 +75,7 @@ const Statistics = () => {
                                     <tr key={index}>
                                         {/* <td>
                                             <div className="deck-name-with-icon">
-                                                <span>{deck.name}</span>
+                                                <span className="deck-name">{deck.name}</span>
                                                 <span className="delete-icon" onClick={() => handleDeleteDeck(player.name, deck.name)}>
                                                     <FontAwesomeIcon icon={faTrashAlt} />
                                                 </span>

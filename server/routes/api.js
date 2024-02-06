@@ -38,7 +38,7 @@ router.patch('/superlatives/:name/increment', superlativesController.incrementSu
 router.patch('/superlatives/:name/decrement', superlativesController.decrementSuperlativeCount);
 
 // Route to delete a deck from a player
-router.delete('/players/:playerName/decks/:deckName', playerController.deleteDeckFromPlayer);
+// router.delete('/players/:playerName/decks/:deckName', playerController.deleteDeckFromPlayer);
 
 
 module.exports = router;
