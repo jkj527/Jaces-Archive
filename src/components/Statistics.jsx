@@ -11,7 +11,7 @@ const Statistics = () => {
         const fetchStatistics = async () => {
             try {
                 const response = await axios.get('/api/statistics');
-                console.log('Statistics: ', response.data);
+                // console.log('Statistics: ', response.data);
                 setStatistics(response.data);
             } catch (error) {
                 console.error('Failed to fetch statistics:', error);
