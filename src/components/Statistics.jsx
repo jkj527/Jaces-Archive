@@ -22,19 +22,17 @@ const Statistics = () => {
     }, []);
     
 
-    // Function to calculate win percentage for an individual deck or a player's total
     const calculateWinPercentage = (firstPlace, gamesPlayed) => {
         return gamesPlayed > 0 ? ((firstPlace / gamesPlayed) * 100).toFixed(2) + '%' : "0%";
     };
 
-    // Function to calculate totals for an individual player
     const calculatePlayerTotals = (decks) => {
         return decks.reduce((totals, deck) => {
             totals.gamesPlayed += deck.gamesPlayed;
-            totals.first += deck.firstPlace; // Corrected from deck.first to deck.firstPlace
-            totals.second += deck.secondPlace; // Corrected from deck.second to deck.secondPlace
-            totals.third += deck.thirdPlace; // Corrected from deck.third to deck.thirdPlace
-            totals.fourth += deck.fourthPlace; // Corrected from deck.fourth to deck.fourthPlace
+            totals.first += deck.firstPlace;
+            totals.second += deck.secondPlace;
+            totals.third += deck.thirdPlace;
+            totals.fourth += deck.fourthPlace;
             return totals;
         }, { gamesPlayed: 0, first: 0, second: 0, third: 0, fourth: 0 });
     };
@@ -42,8 +40,6 @@ const Statistics = () => {
     const handleDeleteDeck = async (playerName, deckName) => {
         try {
             await axios.delete(`/api/players/${playerName}/decks/${deckName}`);
-            // Refresh the statistics to reflect the deletion
-            // This could be optimized but for simplicity, we're refetching all data
             const response = await axios.get('/api/statistics');
             setStatistics(response.data);
         } catch (error) {
@@ -75,14 +71,15 @@ const Statistics = () => {
                             <tbody>
                                 {player.decks.map((deck, index) => (
                                     <tr key={index}>
-                                        <td>
+                                        {/* <td>
                                             <div className="deck-name-with-icon">
                                                 <span>{deck.name}</span>
                                                 <span className="delete-icon" onClick={() => handleDeleteDeck(player.name, deck.name)}>
                                                     <FontAwesomeIcon icon={faTrashAlt} />
                                                 </span>
                                             </div>
-                                        </td>
+                                        </td> */}
+                                        <td>{deck.name}</td>
                                         <td>{deck.activeDeck ? 'Yes' : 'No'}</td>
                                         <td>{deck.gamesPlayed}</td>
                                         <td>{deck.firstPlace}</td>
