@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
-// import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faToggleOn, faToggleOff } from '@fortawesome/free-solid-svg-icons';
 // import { faTrashAlt } from '@fortawesome/free-solid-svg-icons';
 import axios from 'axios';
 import './style/Statistics.css';
@@ -35,6 +36,19 @@ const Statistics = () => {
             totals.fourth += deck.fourthPlace;
             return totals;
         }, { gamesPlayed: 0, first: 0, second: 0, third: 0, fourth: 0 });
+    };
+
+    const toggleDeckActiveStatus = async (playerName, deckName, isActive) => {
+        try {
+            await axios.patch(`/api/players/${playerName}/decks`, {
+                name: deckName,
+                activeDeck: !isActive
+            });
+            const updatedStatistics = await axios.get('/api/statistics');
+            setStatistics(updatedStatistics.data);
+        } catch (error) {
+            console.error('Failed to toggle deck active status:', error);
+        }
     };
 
     // const handleDeleteDeck = async (playerName, deckName) => {
@@ -82,7 +96,14 @@ const Statistics = () => {
                                             </div>
                                         </td> */}
                                         <td>{deck.name}</td>
-                                        <td>{deck.activeDeck ? 'Yes' : 'No'}</td>
+                                        <td>
+                                            <div className='active-with-toggle'>
+                                                <span>{deck.activeDeck ? 'Yes' : 'No'}</span>
+                                                <span className='toggle-icon' onClick={() => toggleDeckActiveStatus(player.name, deck.name, deck.activeDeck)}>
+                                                    <FontAwesomeIcon icon={deck.activeDeck ? faToggleOn : faToggleOff} />
+                                                </span>
+                                            </div>
+                                        </td>
                                         <td>{deck.gamesPlayed}</td>
                                         <td>{deck.firstPlace}</td>
                                         <td>{deck.secondPlace}</td>

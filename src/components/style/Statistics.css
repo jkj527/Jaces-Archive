@@ -66,3 +66,21 @@
 .delete-icon:hover {
   color: var(--soft-red);
 }
+
+.active-with-toggle {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.toggle-icon {
+  margin-left: auto;
+  cursor: pointer;
+  color: var(--soft-white);
+  transition: color 0.3s ease;
+}
+
+.toggle-icon:hover {
+  color: var(--soft-red);
+}
