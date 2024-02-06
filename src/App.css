@@ -1,12 +1,20 @@
-.App {
+/* .App {
   padding-top: 100px;
+} */
+
+.main-content {
+  margin-top: 100px;
+}
+
+body, html {
+  max-height: 100vh;
+  /* overflow: hidden; */
 }
 
 body {
-  background-image: url('jabg.png');
+  background-image: url('jabg2.png');
   background-size: cover;
   background-repeat: no-repeat;
   background-position: center center;
   background-attachment: fixed;
 }
-

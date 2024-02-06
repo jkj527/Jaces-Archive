@@ -65,12 +65,30 @@ const playerController = {
 
     getPlayerStatistics: async (req, res) => {
         try {
-            const players = await Player.find({}); // This fetches all data for players
+            const players = await Player.find({});
             res.status(200).json(players);
         } catch (error) {
             res.status(500).json({ message: error.message });
         }
     },
+    
+    // deleteDeckFromPlayer: async (req, res) => {
+    //     try {
+    //         const { playerName, deckName } = req.params;
+    //         // Find the player and remove the deck from their decks array
+    //         const player = await Player.findOneAndUpdate(
+    //             { name: playerName },
+    //             { $pull: { decks: { name: deckName } } },
+    //             { new: true }
+    //         );
+    //         if (!player) {
+    //             return res.status(404).json({ message: 'Player not found' });
+    //         }
+    //         res.status(200).json(player);
+    //     } catch (error) {
+    //         res.status(500).json({ message: error.message });
+    //     }
+    // },
     
 }
 

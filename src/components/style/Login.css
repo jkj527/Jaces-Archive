@@ -1,0 +1,74 @@
+.login-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    background: linear-gradient(135deg, var(--soft-blue) 0%, var(--soft-green) 100%);
+    background-size: 200% 200%;
+    animation: GradientShift 10s ease infinite;
+  }
+  
+  @keyframes GradientShift {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+  }
+  
+
+.welcome-message {
+    font-size: 3.5rem;
+    color: var(--soft-white);
+    margin-bottom: 3rem;
+    animation: fadeIn 2s ease-out;
+    font-weight: 600;
+  }
+  
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(-30px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  
+
+.login-form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.login-input {
+  font-size: 1.5rem;
+  padding: 15px;
+  margin-bottom: 2rem;
+  border: 3px solid var(--soft-grey);
+  border-radius: 30px;
+  outline: none;
+  width: 350px;
+  transition: border-color 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+}
+
+.login-input:focus {
+  border-color: var(--soft-red);
+  box-shadow: 0 0 12px var(--soft-red);
+}
+
+.login-button {
+  padding: 15px 60px;
+  font-size: 1.75rem;
+  color: var(--soft-white);
+  background-color: var(--soft-red);
+  border: none;
+  border-radius: 30px;
+  cursor: pointer;
+  transition: background-color 0.3s, transform 0.2s;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.25);
+}
+
+.login-button:hover {
+  background-color: var(--soft-green);
+  transform: scale(1.1);
+}
+
+.login-button:active {
+  transform: scale(0.9);
+}

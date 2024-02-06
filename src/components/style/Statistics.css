@@ -1,50 +1,68 @@
 .statistics-container {
-    padding: 20px;
-    margin-top: 20px;
-    font-family: 'Roboto', sans-serif;
-  }
-  
-  .statistics-heading {
-    text-align: center;
-    color: var(--soft-red);
-    margin-bottom: 20px;
-    /* font-weight: 500;
-    font-size: 2rem; */
-  }
-  
-  .statistics-table {
-    width: 100%;
-    border-collapse: collapse;
-    margin: 0 auto;
-    background-color: var(--soft-black);
-    margin-bottom: 15px;
-  }
-  
-  .statistics-table th,
-  .statistics-table td {
-    padding: 10px;
-    border: 1px solid var(--soft-white);
-    color: var(--soft-white);
-    text-align: left;
-  }
-  
-  .statistics-table th {
-    background-color: var(--soft-blue);
-  }
-  
-  .statistics-table td {
-    background-color: var(--soft-black);
-    transition: background-color 0.3s;
-  }
-  
-  .statistics-table tr:nth-child(even) td {
-    background-color: var(--soft-grey);
-  }
-  
-  .statistics-table tr:hover td {
-    background-color: var(--soft-green);
-  }
+  padding: 20px;
+  margin-top: 20px;
+  font-family: "Roboto", sans-serif;
+}
 
-  .totals-row {
-    font-weight: bold;
-  }
+.statistics-heading {
+  text-align: center;
+  color: var(--soft-red);
+  margin-bottom: 20px;
+  /* font-weight: 500;
+    font-size: 2rem; */
+}
+
+.statistics-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 0 auto;
+  background-color: var(--soft-black);
+  margin-bottom: 15px;
+}
+
+.statistics-table th,
+.statistics-table td {
+  padding: 10px;
+  border: 1px solid var(--soft-white);
+  color: var(--soft-white);
+  text-align: left;
+}
+
+.statistics-table th {
+  background-color: var(--soft-blue);
+}
+
+.statistics-table td {
+  background-color: var(--soft-black);
+  transition: background-color 0.3s;
+}
+
+.statistics-table tr:nth-child(even) td {
+  background-color: var(--soft-grey);
+}
+
+.statistics-table tr:hover td {
+  background-color: var(--soft-green);
+}
+
+.totals-row {
+  font-weight: bold;
+}
+
+.deck-name-with-icon {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.delete-icon {
+  margin-left: auto;
+  cursor: pointer;
+  color: var(--soft-white);
+  transition: color 0.3s ease;
+}
+
+.delete-icon:hover {
+  color: var(--soft-red);
+}

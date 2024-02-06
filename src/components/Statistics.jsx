@@ -1,34 +1,17 @@
 import React, { useState, useEffect } from 'react';
+// import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+// import { faTrashAlt } from '@fortawesome/free-solid-svg-icons';
 import axios from 'axios';
 import './style/Statistics.css';
 
 const Statistics = () => {
-    // mock data
-    const [statistics, setStatistics] = useState([
-        {
-            name: 'Scott',
-            decks: [
-                { name: 'Kalamax, the Stormsire', active: true, gamesPlayed: 10, first: 4, second: 3, third: 2, fourth: 1 },
-                { name: 'Carth the Lion', active: true, gamesPlayed: 5, first: 1, second: 1, third: 2, fourth: 1 },
-                // ... additional decks
-            ],
-        },
-        {
-            name: 'Connor',
-            decks: [
-                { name: 'Admiral Beckett Brass', active: true, gamesPlayed: 8, first: 2, second: 2, third: 3, fourth: 1 },
-                { name: 'Jorn, God of Winter', active: true, gamesPlayed: 6, first: 0, second: 3, third: 2, fourth: 1 },
-                // ... additional decks
-            ],
-        },
-        // ... additional players
-    ]);
+    const [statistics, setStatistics] = useState([]);
 
     useEffect(() => {
         const fetchStatistics = async () => {
             try {
                 const response = await axios.get('/api/statistics');
-                console.log('Statistics: ', response.data);
+                // console.log('Statistics: ', response.data);
                 setStatistics(response.data);
             } catch (error) {
                 console.error('Failed to fetch statistics:', error);
@@ -39,22 +22,32 @@ const Statistics = () => {
     }, []);
     
 
-    // Function to calculate win percentage for an individual deck or a player's total
-    const calculateWinPercentage = (first, gamesPlayed) => {
-        return gamesPlayed > 0 ? ((first / gamesPlayed) * 100).toFixed(2) + '%' : "0%";
+    const calculateWinPercentage = (firstPlace, gamesPlayed) => {
+        return gamesPlayed > 0 ? ((firstPlace / gamesPlayed) * 100).toFixed(2) + '%' : "0%";
     };
 
-    // Function to calculate totals for an individual player
     const calculatePlayerTotals = (decks) => {
         return decks.reduce((totals, deck) => {
             totals.gamesPlayed += deck.gamesPlayed;
-            totals.first += deck.first;
-            totals.second += deck.second;
-            totals.third += deck.third;
-            totals.fourth += deck.fourth;
+            totals.first += deck.firstPlace;
+            totals.second += deck.secondPlace;
+            totals.third += deck.thirdPlace;
+            totals.fourth += deck.fourthPlace;
             return totals;
         }, { gamesPlayed: 0, first: 0, second: 0, third: 0, fourth: 0 });
     };
+
+    // const handleDeleteDeck = async (playerName, deckName) => {
+    //     try {
+    //         await axios.delete(`/api/players/${playerName}/decks/${deckName}`);
+    //         // Refresh the statistics to reflect the deletion
+    //         // This could be optimized but for simplicity, we're refetching all data
+    //         const response = await axios.get('/api/statistics');
+    //         setStatistics(response.data);
+    //     } catch (error) {
+    //         console.error('Failed to delete deck:', error);
+    //     }
+    // };
 
     return (
         <div className='statistics-container'>
@@ -80,6 +73,14 @@ const Statistics = () => {
                             <tbody>
                                 {player.decks.map((deck, index) => (
                                     <tr key={index}>
+                                        {/* <td>
+                                            <div className="deck-name-with-icon">
+                                                <span className="deck-name">{deck.name}</span>
+                                                <span className="delete-icon" onClick={() => handleDeleteDeck(player.name, deck.name)}>
+                                                    <FontAwesomeIcon icon={faTrashAlt} />
+                                                </span>
+                                            </div>
+                                        </td> */}
                                         <td>{deck.name}</td>
                                         <td>{deck.activeDeck ? 'Yes' : 'No'}</td>
                                         <td>{deck.gamesPlayed}</td>
