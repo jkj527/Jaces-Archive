@@ -3,26 +3,7 @@ import axios from 'axios';
 import './style/Statistics.css';
 
 const Statistics = () => {
-    // mock data
-    const [statistics, setStatistics] = useState([
-        {
-            name: 'Scott',
-            decks: [
-                { name: 'Kalamax, the Stormsire', active: true, gamesPlayed: 10, first: 4, second: 3, third: 2, fourth: 1 },
-                { name: 'Carth the Lion', active: true, gamesPlayed: 5, first: 1, second: 1, third: 2, fourth: 1 },
-                // ... additional decks
-            ],
-        },
-        {
-            name: 'Connor',
-            decks: [
-                { name: 'Admiral Beckett Brass', active: true, gamesPlayed: 8, first: 2, second: 2, third: 3, fourth: 1 },
-                { name: 'Jorn, God of Winter', active: true, gamesPlayed: 6, first: 0, second: 3, third: 2, fourth: 1 },
-                // ... additional decks
-            ],
-        },
-        // ... additional players
-    ]);
+    const [statistics, setStatistics] = useState([]);
 
     useEffect(() => {
         const fetchStatistics = async () => {
