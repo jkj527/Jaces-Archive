@@ -75,7 +75,6 @@ const playerController = {
     updateDeckStatus: async (req, res) => {
         const { playerName } = req.params;
         const { name, activeDeck } = req.body;
-        // console.log(`Updating deck status for player: ${playerName}, deck: ${name}, activeDeck: ${activeDeck}`);
 
         try {
             const player = await Player.findOne({ name: playerName });
