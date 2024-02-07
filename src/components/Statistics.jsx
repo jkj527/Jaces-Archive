@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
-// import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faToggleOn, faToggleOff } from '@fortawesome/free-solid-svg-icons';
 // import { faTrashAlt } from '@fortawesome/free-solid-svg-icons';
 import axios from 'axios';
 import './style/Statistics.css';
@@ -37,6 +38,19 @@ const Statistics = () => {
         }, { gamesPlayed: 0, first: 0, second: 0, third: 0, fourth: 0 });
     };
 
+    const toggleDeckActiveStatus = async (playerName, deckName, isActive) => {
+        try {
+            await axios.patch(`/api/players/${playerName}/decks`, {
+                name: deckName,
+                activeDeck: !isActive
+            });
+            const updatedStatistics = await axios.get('/api/statistics');
+            setStatistics(updatedStatistics.data);
+        } catch (error) {
+            console.error('Failed to toggle deck active status:', error);
+        }
+    };
+
     // const handleDeleteDeck = async (playerName, deckName) => {
     //     try {
     //         await axios.delete(`/api/players/${playerName}/decks/${deckName}`);
@@ -72,7 +86,7 @@ const Statistics = () => {
                             </thead>
                             <tbody>
                                 {player.decks.map((deck, index) => (
-                                    <tr key={index}>
+                                    <tr key={index} className={`statistics-body ${!deck.activeDeck ? 'inactive-deck' : ''}`}>
                                         {/* <td>
                                             <div className="deck-name-with-icon">
                                                 <span className="deck-name">{deck.name}</span>
@@ -82,7 +96,14 @@ const Statistics = () => {
                                             </div>
                                         </td> */}
                                         <td>{deck.name}</td>
-                                        <td>{deck.activeDeck ? 'Yes' : 'No'}</td>
+                                        <td>
+                                            <div className='active-with-toggle'>
+                                                <span>{deck.activeDeck ? 'Yes' : 'No'}</span>
+                                                <span className='toggle-icon' onClick={() => toggleDeckActiveStatus(player.name, deck.name, deck.activeDeck)}>
+                                                    <FontAwesomeIcon icon={deck.activeDeck ? faToggleOn : faToggleOff} />
+                                                </span>
+                                            </div>
+                                        </td>
                                         <td>{deck.gamesPlayed}</td>
                                         <td>{deck.firstPlace}</td>
                                         <td>{deck.secondPlace}</td>

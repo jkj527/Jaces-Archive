@@ -7,19 +7,8 @@ import { TextField, Snackbar, Alert } from '@mui/material';
 import './style/Home.css';
 
 const Home = () => {
-    const mockPlayers = ['Ben', 'Mason', 'Tim', 'Scott', 'Connor', 'David', 'Jake'];
-    const mockDecks = {
-        'Ben': ['Ragavan', 'Lady Caleria'],
-        'Mason': ['Breya', 'Shirei'],
-        'Tim': ['Prismatic Bridge', 'Zndersplt & Okaun'],
-        'Scott': ['Kalamax', 'Carth the Lion'],
-        'Connor': ['Jorn', 'Tovolar'],
-        'David': ['Mishra', 'Aesi'],
-        'Jake': ['Galazeth Prismari', 'Obeka']
-    };
-
-    const [players, setPlayers] = useState(mockPlayers);
-    const [decks, setDecks] = useState(mockDecks);
+    const [players, setPlayers] = useState([]);
+    const [decks, setDecks] = useState({});
     const [gameSetup, setGameSetup] = useState(Array(4).fill({ player: '', deck: '' }));
     const [winner, setWinner] = useState('');
     const [secondPlace, setSecondPlace] = useState('');
@@ -48,9 +37,11 @@ const Home = () => {
     const handlePlayerChange = (index, selectedPlayer) => {
         axios.get(`/api/players/${encodeURIComponent(selectedPlayer)}/decks`)
             .then(response => {
-                // Assuming the backend sends an array of deck objects
-                const playerDecks = response.data.map(deck => deck.name); // Extract deck names
-                const updatedDecks = { ...decks, [selectedPlayer]: playerDecks };
+                const activePlayerDecks = response.data
+                    .filter(deck => deck.activeDeck)
+                    .map(deck => deck.name);
+    
+                const updatedDecks = { ...decks, [selectedPlayer]: activePlayerDecks };
                 setDecks(updatedDecks);
     
                 const newGameSetup = [...gameSetup];
@@ -58,9 +49,7 @@ const Home = () => {
                 setGameSetup(newGameSetup);
             })
             .catch(error => console.error(`Failed to fetch decks for player ${selectedPlayer}: `, error));
-    };
-    
-    
+    };    
 
     const handleDeckChange = (index, selectedDeck) => {
         const newGameSetup = [...gameSetup];
@@ -85,12 +74,6 @@ const Home = () => {
             otherNotes,
             roundsToWin,
         };
-    
-        // console.log('playersAndDecks: ', gameData.playersAndDecks);
-        // console.log('1st: ', gameData.winner);
-        // console.log('2nd: ', gameData.secondPlace);
-        // console.log('3rd: ', gameData.thirdPlace);
-        // console.log('4th: ', gameData.fourthPlace);
 
         axios.post('/api/game-log', gameData)
             .then(() => {

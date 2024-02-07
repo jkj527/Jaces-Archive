@@ -71,6 +71,35 @@ const playerController = {
             res.status(500).json({ message: error.message });
         }
     },
+
+    updateDeckStatus: async (req, res) => {
+        const { playerName } = req.params;
+        const { name, activeDeck } = req.body;
+        // console.log(`Updating deck status for player: ${playerName}, deck: ${name}, activeDeck: ${activeDeck}`);
+
+        try {
+            const player = await Player.findOne({ name: playerName });
+            if (!player) {
+                return res.status(404).json({ message: 'Player not found' });
+            }
+
+            // Find the deck within the player's decks and update its active status
+            const deck = player.decks.find(deck => deck.name === name);
+            if (!deck) {
+                return res.status(404).json({ message: 'Deck not found' });
+            }
+
+            // Update the activeDeck status
+            deck.activeDeck = activeDeck;
+
+            await player.save();
+
+            res.status(200).json({ message: 'Deck status updated successfully', deck: deck });
+        } catch (error) {
+            console.log('Failed to update deck status: ', error);
+            res.status(500).json({ message: 'Failed to update deck status', error: error.message });
+        }
+    },
     
     // deleteDeckFromPlayer: async (req, res) => {
     //     try {
