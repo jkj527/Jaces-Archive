@@ -84,3 +84,9 @@
 .toggle-icon:hover {
   color: var(--soft-red);
 }
+
+tr.statistics-body.inactive-deck td {
+  font-style: italic;
+  background-color: #959ea4b3;
+  transition: 0.3s;
+}

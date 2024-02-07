@@ -86,7 +86,7 @@ const Statistics = () => {
                             </thead>
                             <tbody>
                                 {player.decks.map((deck, index) => (
-                                    <tr key={index}>
+                                    <tr key={index} className={`statistics-body ${!deck.activeDeck ? 'inactive-deck' : ''}`}>
                                         {/* <td>
                                             <div className="deck-name-with-icon">
                                                 <span className="deck-name">{deck.name}</span>
